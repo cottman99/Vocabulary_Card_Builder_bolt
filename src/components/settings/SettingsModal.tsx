@@ -1,12 +1,12 @@
 import React, { useCallback } from 'react';
 import { X } from 'lucide-react';
-import { useStore } from '../store';
-import { LLMProvider } from '../types';
-import { DEFAULT_LLM_SETTINGS } from '../utils/defaults';
-import { ProviderSelect } from './settings/ProviderSelect';
-import { SettingsField } from './settings/SettingsField';
-import { PromptField } from './settings/PromptField';
-import { logger } from '../utils/logger/Logger';
+import { useStore } from '../../store';
+import { LLMProvider } from '../../types';
+import { DEFAULT_LLM_SETTINGS } from '../../utils/defaults';
+import { ProviderSelect } from './ProviderSelect';
+import { SettingsField } from './SettingsField';
+import { PromptField } from './PromptField';
+import { logger } from '../../utils/logger/Logger';
 
 export const SettingsModal: React.FC = () => {
   const { llmSettings, promptSettings, setLLMSettings, setPromptSettings } =
@@ -34,7 +34,7 @@ export const SettingsModal: React.FC = () => {
           </p>
         </div>
         <button
-          onClick={() => document.getElementById('settingsModal')?.close()}
+          onClick={() => (document.getElementById('settingsModal') as HTMLDialogElement)?.close()}
           className="text-gray-400 hover:text-gray-600 transition-colors"
         >
           <X className="w-5 h-5" />
@@ -133,7 +133,7 @@ export const SettingsModal: React.FC = () => {
       
       <div className="flex justify-end gap-3 mt-8 pt-4 border-t">
         <button
-          onClick={() => document.getElementById('settingsModal')?.close()}
+          onClick={() => (document.getElementById('settingsModal') as HTMLDialogElement)?.close()}
           className="btn btn-primary px-6"
         >
           Done

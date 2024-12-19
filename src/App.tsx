@@ -1,12 +1,9 @@
 import React from 'react';
-import { useImageExport } from './hooks/useImageExport';
 import { Toolbar } from './components/Toolbar';
 import { ImagePreview } from './components/ImagePreview';
 import { ImageControls } from './components/ImageControls';
 import { LabelEditor } from './components/LabelEditor';
 import { StyleEditor } from './components/StyleEditor';
-import { ExportModal } from './components/export/ExportModal';
-import { SettingsModal } from './components/SettingsModal';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { Toast } from './components/Toast';
 import { DebugPanel } from './components/DebugPanel/index';
@@ -15,7 +12,6 @@ import { logger } from './utils/logger/Logger';
 
 function App() {
   const { toasts, hideToast } = useToast();
-  const { handleExport } = useImageExport();
 
   // Log app initialization
   React.useEffect(() => {
@@ -25,7 +21,7 @@ function App() {
   return (
     <ErrorBoundary>
       <div className="min-h-screen bg-gray-50 flex flex-col">
-        <Toolbar onExport={handleExport} />
+        <Toolbar />
         
         <main className="container mx-auto p-4 md:p-8 flex-grow">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
@@ -42,9 +38,7 @@ function App() {
             </div>
           </div>
         </main>
-        
-        <SettingsModal />
-        <ExportModal />
+      
         
         {toasts.map((toast) => (
           <Toast
