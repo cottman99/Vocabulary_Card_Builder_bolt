@@ -7,7 +7,7 @@ import { ImageDropzone } from './image/ImageDropzone';
 import { logger } from '../utils/logger/Logger';
 
 export const ImagePreview: React.FC = () => {
-  const { image, labels, styleSettings } = useStore();
+  const { image, labels, styleSettings, imageSize } = useStore();
 
   React.useEffect(() => {
     logger.label.debug('Labels updated in preview', { 
@@ -20,9 +20,40 @@ export const ImagePreview: React.FC = () => {
     return <ImageDropzone className="h-[600px]" />;
   }
 
+  // 计算容器样式
+  // const containerStyle = imageSize ? {
+  //   width: '100%',
+  //   height: `${imageSize.height}px`,
+  //   maxWidth: `${imageSize.width}px`,
+  //   //maxWidth: '100%',
+  // } : {
+  //   width: '100%',
+  //   height: '600px'
+  // };
+ 
+  const containerStyle = imageSize ? (() => {
+    const aspectRatio = imageSize ? imageSize.naturalWidth / imageSize.naturalHeight : 1;
+    return {
+        width: aspectRatio > 1 ? '100%' : 'auto',
+        height: aspectRatio > 1 ? 'auto' : '100%',
+        aspectRatio: aspectRatio,
+    }
+    
+})() : {
+    width: '100%',
+    height: '600px'
+};
+
+
+  
+
   return (
-    <div className="relative w-full h-[600px] bg-white rounded-xl shadow-sm overflow-hidden 
-      transition-all duration-300 hover:shadow-md group">
+    <div 
+      id="image-preview"
+      className="relative bg-white rounded-none shadow-sm overflow-hidden 
+        transition-all duration-300 hover:shadow-md group"
+      style={containerStyle}
+    >
       <div className="absolute inset-0">
         <ImageContainer src={image} />
       </div>

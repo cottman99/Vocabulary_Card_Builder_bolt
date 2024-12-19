@@ -3,9 +3,26 @@ import { Label, LLMSettings, PromptSettings, StyleSettings } from '../types';
 import { DEFAULT_IMAGE_ANALYSIS_PROMPT, DEFAULT_LABEL_GENERATION_PROMPT, DEFAULT_PARAMS } from '../utils/defaults';
 import { logger } from '../utils/logger/Logger';
 
+interface ImageSize {
+  width: number;
+  height: number;
+  aspectRatio: number;
+  naturalWidth: number;
+  naturalHeight: number;
+  displayWidth: number;
+  displayHeight: number;
+  containerWidth: number;
+  containerHeight: number;
+  alignment?: {
+    scale: number;
+    offsetX: number;
+    offsetY: number;
+  };
+}
+
 interface State {
   image: string | null;
-  imageSize: { width: number; height: number } | null;
+  imageSize: ImageSize | null;
   labels: Label[];
   selectedLabelId: string | null;
   llmSettings: LLMSettings;
@@ -17,7 +34,7 @@ interface State {
   };
   isAnalyzing: boolean;
   setImage: (image: string | null) => void;
-  setImageSize: (size: { width: number; height: number } | null) => void;
+  setImageSize: (size: ImageSize | null) => void;
   setLabels: (labels: Label[]) => void;
   addLabel: (label: Label) => void;
   removeLabel: (id: string) => void;

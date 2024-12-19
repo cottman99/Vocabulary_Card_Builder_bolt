@@ -72,7 +72,19 @@ export const ImageContainer: React.FC<ImageContainerProps> = ({ src, onLoad }) =
         alignment: dimensions.alignment
       });
 
-      setImageSize(dimensions);
+      // Convert to ImageSize format
+      setImageSize({
+        width: dimensions.displayWidth,
+        height: dimensions.displayHeight,
+        aspectRatio: dimensions.naturalWidth / dimensions.naturalHeight,
+        naturalWidth: dimensions.naturalWidth,
+        naturalHeight: dimensions.naturalHeight,
+        displayWidth: dimensions.displayWidth,
+        displayHeight: dimensions.displayHeight,
+        containerWidth: dimensions.containerWidth,
+        containerHeight: dimensions.containerHeight,
+        alignment: dimensions.alignment
+      });
       
       onLoad?.();
       setIsLoading(false);

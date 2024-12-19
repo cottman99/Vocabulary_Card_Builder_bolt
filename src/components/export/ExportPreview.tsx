@@ -463,7 +463,7 @@ export const ExportPreview: React.FC<ExportPreviewProps> = ({ onSelectionChange 
                     className="absolute w-2 h-2 bg-white border border-gray-400
                       rounded-full transform -translate-x-1/2 -translate-y-1/2"
                     style={{
-                      ...getHandlePosition(handle, selection.viewport!),
+                      ...getHandlePosition(handle),
                       cursor: getHandleCursor(handle)
                     }}
                   />
@@ -509,8 +509,7 @@ export const ExportPreview: React.FC<ExportPreviewProps> = ({ onSelectionChange 
 };
 
 // Helper functions
-function getHandlePosition(handle: string, viewport: ViewportCoords) {
-  const { width, height } = viewport;
+function getHandlePosition(handle: string) {
   switch (handle) {
     case 'top-left': return { left: '0%', top: '0%' };
     case 'top-right': return { left: '100%', top: '0%' };
