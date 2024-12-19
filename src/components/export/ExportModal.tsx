@@ -98,6 +98,16 @@ export const ExportModal: React.FC = () => {
     document.getElementById('exportModal')?.close();
   };
 
+  const isExportDisabled = () => {
+    return isExporting;
+  };
+
+  const getExportButtonText = () => {
+    if (isExporting) return 'Exporting...';
+    if (!showPreview) return 'Export';
+    return selection ? 'Export Selection' : 'Export Full Image';
+  };
+
   return (
     <dialog
       id="exportModal"
@@ -128,9 +138,8 @@ export const ExportModal: React.FC = () => {
               <div className="text-sm text-blue-700">
                 <p className="font-medium mb-1">Export Preview</p>
                 <p className="text-blue-600">
-                  {selection
-                    ? 'Selected area will be exported as a new image.'
-                    : 'Select an area to crop or export the entire image.'}
+                  The exported image will include all vocabulary labels and annotations.
+                  You can select a specific area or export the entire view.
                 </p>
               </div>
             </div>
@@ -146,32 +155,28 @@ export const ExportModal: React.FC = () => {
               }}
               className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800
                 transition-colors"
-              disabled={isExporting}
             >
               Back
             </button>
             <button
               onClick={handleConfirmExport}
-              disabled={isExporting}
+              disabled={isExportDisabled()}
               className={`px-4 py-2 text-sm font-medium text-white rounded-lg
                 transition-all duration-200 flex items-center gap-2
-                ${isExporting
+                ${isExportDisabled()
                   ? 'bg-gray-400 cursor-not-allowed'
-                  : 'bg-primary hover:bg-primary/90'
+                  : 'bg-primary hover:bg-primary/90 active:scale-95'
                 }`}
             >
               {isExporting ? (
                 <>
-                  <div className="w-4 h-4 border-2 border-white/30 border-t-white
-                    rounded-full animate-spin" />
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                   <span>Exporting...</span>
                 </>
               ) : (
                 <>
                   <Download className="w-4 h-4" />
-                  <span>
-                    {selection ? 'Export Selection' : 'Export Full Image'}
-                  </span>
+                  <span>{getExportButtonText()}</span>
                 </>
               )}
             </button>

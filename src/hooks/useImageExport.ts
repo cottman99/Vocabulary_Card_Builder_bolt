@@ -25,6 +25,22 @@ export function useImageExport() {
       // 首先生成完整的预览图像
       const previewDataUrl = await generatePreviewImage();
       
+      // 获取预览图像的实际尺寸
+      const previewImg = new Image();
+      await new Promise((resolve, reject) => {
+        previewImg.onload = resolve;
+        previewImg.onerror = reject;
+        previewImg.src = previewDataUrl;
+      });
+      
+      console.log('Debug - Export dimensions:', {
+        previewWidth: previewImg.width,
+        previewHeight: previewImg.height,
+        selection: selection,
+        containerWidth: document.getElementById('image-preview')?.offsetWidth,
+        containerHeight: document.getElementById('image-preview')?.offsetHeight,
+      });
+
       // 如果有选择区域，创建一个临时canvas来裁剪
       if (selection) {
         const canvas = document.createElement('canvas');
@@ -38,17 +54,21 @@ export function useImageExport() {
         canvas.width = selection.width;
         canvas.height = selection.height;
 
-        // 获取预览图片
-        const img = new Image();
-        await new Promise((resolve, reject) => {
-          img.onload = resolve;
-          img.onerror = reject;
-          img.src = previewDataUrl;
+        console.log('Debug - Canvas and Image:', {
+          canvasWidth: canvas.width,
+          canvasHeight: canvas.height,
+          imageWidth: previewImg.width,
+          imageHeight: previewImg.height,
+          selectionX: selection.x,
+          selectionY: selection.y,
+          selectionWidth: selection.width,
+          selectionHeight: selection.height
         });
 
-        // 直接使用选择区域的坐标进行裁剪
+        // 使用选择区域的坐标进行裁剪
+        // 注意：此时的 selection 坐标已经是基于实际图像尺寸的
         ctx.drawImage(
-          img,
+          previewImg,
           selection.x,
           selection.y,
           selection.width,
@@ -85,6 +105,7 @@ export function useImageExport() {
       
       return true;
     } catch (error) {
+      console.error('Export error:', error);
       logger.system.error('Image export failed', { 
         error: error instanceof Error ? error.message : String(error)
       });
