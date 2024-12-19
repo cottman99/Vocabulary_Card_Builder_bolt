@@ -26,26 +26,7 @@ function App() {
         <main className="container mx-auto p-4 md:p-8 flex-grow">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
           <div className="lg:col-span-2 space-y-4">
-            {/* 外层容器 浅灰色 圆角 投影 鼠标悬浮阴影 */}
-            <div 
-              id="outer-container" 
-              className="bg-gray-100 rounded-lg shadow-sm hover:shadow-md transition-all duration-300"
-              style={{
-                display: 'flex', 
-                flexGrow: 1, 
-                flexShrink: 1, 
-                aspectRatio: '16 / 9',
-                width: '100%', // 确保容器宽度占满可用空间
-                height: '100%', // 确保容器高度占满可用空间
-                maxHeight: '600px',
-                position: 'relative',
-              }}
-            >
-              {/* 居中 */}
-              <div id="inner-container" style={{ flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <ImagePreview />
-              </div>
-            </div>
+            <ImagePreview />
             <ImageControls />
           </div>
           
