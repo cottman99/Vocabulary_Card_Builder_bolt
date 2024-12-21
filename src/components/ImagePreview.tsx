@@ -17,20 +17,9 @@ export const ImagePreview: React.FC = () => {
   }, [labels]);
 
   if (!image) {
-    return <ImageDropzone className="h-[600px]" />;
+    return <ImageDropzone className="h-[600pX]" />;
   }
 
-  // 计算容器样式
-  // const containerStyle = imageSize ? {
-  //   width: '100%',
-  //   height: `${imageSize.height}px`,
-  //   maxWidth: `${imageSize.width}px`,
-  //   //maxWidth: '100%',
-  // } : {
-  //   width: '100%',
-  //   height: '600px'
-  // };
- 
   const containerStyle = imageSize ? (() => {
     const aspectRatio = imageSize ? imageSize.naturalWidth / imageSize.naturalHeight : 16/9;
     return {
@@ -41,7 +30,7 @@ export const ImagePreview: React.FC = () => {
     
 })() : {
     width: '100%',
-    height: '600px'
+    height: '100%'
 };
 
 
