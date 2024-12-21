@@ -17,7 +17,7 @@ export const ImagePreview: React.FC = () => {
   }, [labels]);
 
   if (!image) {
-    return <ImageDropzone className="h-[600pX]" />;
+    return <ImageDropzone className="h-[400pX]" />;
   }
 
   const containerStyle = imageSize ? (() => {
@@ -30,7 +30,7 @@ export const ImagePreview: React.FC = () => {
     
 })() : {
     width: '100%',
-    height: '100%'
+    height: '600pX'
 };
 
 

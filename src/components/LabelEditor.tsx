@@ -120,21 +120,21 @@ export const LabelEditor: React.FC = () => {
       </div>
       <div className="space-y-6">
         <LabelField
-          label="sourceLanguage"
+          label={languageParams.sourceLanguage}
           value={selectedLabel.sourceLanguage}
           onChange={(value) => handleFieldUpdate('sourceLanguage', value)}
           placeholder="Enter sourceLanguage text"
         />
         
         <LabelField
-          label="Phonetic"
+          label={languageParams.phonetic}
           value={selectedLabel.phonetic}
           onChange={(value) => handleFieldUpdate('phonetic', value)}
           placeholder="IPA pronunciation"
         />
         
         <LabelField
-          label="targetLanguage"
+          label={languageParams.targetLanguage}
           value={selectedLabel.targetLanguage}
           onChange={(value) => handleFieldUpdate('targetLanguage', value)}
           placeholder="targetLanguage translation"

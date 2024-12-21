@@ -12,6 +12,7 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.18.0",
     "@google/generative-ai": "^0.21.0",
+    "@headlessui/react": "^2.2.0",
     "html-to-image": "^1.11.11",
     "lucide-react": "^0.344.0",
     "openai": "^4.29.0",
