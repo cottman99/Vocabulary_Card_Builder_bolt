@@ -22,9 +22,9 @@ export const Toolbar: React.FC = () => {
 
   return (
     <>
-      <div className="sticky top-0 z-50 backdrop-blur-lg bg-white/80 border-b border-gray-200">
+      <div className="sticky top-0 z-50 backdrop-blur-lg bg-white/80 border-b border-gray-200 h-12 md:h-16">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex items-center justify-between h-full">
             <div className="flex items-center gap-2">
               <Camera className="w-6 h-6 text-primary" />
               <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">

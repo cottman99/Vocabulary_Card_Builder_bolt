@@ -19,4 +19,5 @@ export interface StyleSettings {
   borderColor: string;
   backgroundColor: string;
   textColor: string;
+  fontSize: string;
 }

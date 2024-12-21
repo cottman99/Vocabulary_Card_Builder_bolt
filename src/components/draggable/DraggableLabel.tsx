@@ -13,6 +13,7 @@ interface DraggableLabelProps {
     borderColor: string;
     backgroundColor: string;
     textColor: string;
+    fontSize: string; 
   };
 }
 
@@ -117,11 +118,12 @@ export const DraggableLabel: React.FC<DraggableLabelProps> = ({
             ? '0 8px 16px rgba(0,0,0,0.12)'
             : '0 4px 6px rgba(0,0,0,0.06)',
           maxWidth: '200px',
-          minWidth: '120px',
+          minWidth: '100px',
           backdropFilter: 'blur(8px)',
           transform: isDragging ? 'scale(1.02)' : 'scale(1)',
           transition: isDragging ? 'none' : 'all 0.2s',
-          willChange: 'transform'
+          willChange: 'transform',
+          textAlign: 'center'
         }}
         onClick={() => {
           setSelectedLabelId(label.id);
@@ -131,9 +133,15 @@ export const DraggableLabel: React.FC<DraggableLabelProps> = ({
           });
         }}
       >
-        <div className="font-bold text-sm mb-1">{label.sourceLanguage}</div>
-        <div className="text-xs font-mono opacity-75">{label.phonetic}</div>
-        <div className="text-xs mt-1 font-medium">{label.targetLanguage}</div>
+      <div style={{ fontSize: `calc(${styleSettings.fontSize} * 1.2)`, fontWeight: 'bold', marginBottom: '4px', lineHeight: '1' }}>
+        {label.sourceLanguage}
+      </div>
+      <div style={{ fontSize: styleSettings.fontSize, fontWeight: 'normal', opacity: 0.75, lineHeight: '1.2' }}>
+        {label.phonetic}
+      </div>
+      <div style={{ fontSize: styleSettings.fontSize, fontWeight: 'normal', marginTop: '4px', lineHeight: '1.2' }}>
+        {label.targetLanguage}
+      </div>
       </div>
     </Draggable>
   );

@@ -6,6 +6,7 @@ interface StylePreset {
   borderColor: string;
   backgroundColor: string;
   textColor: string;
+  textSize: string;
 }
 
 const presets: StylePreset[] = [
@@ -14,24 +15,28 @@ const presets: StylePreset[] = [
     borderColor: '#FF4444',
     backgroundColor: '#FFFFFF',
     textColor: '#000000',
+    textSize: '16px',
   },
   {
     name: 'Dark',
     borderColor: '#6366F1',
     backgroundColor: '#1F2937',
     textColor: '#FFFFFF',
+    textSize: '16px',
   },
   {
     name: 'Minimal',
     borderColor: '#E5E7EB',
     backgroundColor: '#FFFFFF',
     textColor: '#374151',
+    textSize: '16px',
   },
   {
     name: 'Vibrant',
     borderColor: '#8B5CF6',
     backgroundColor: '#EEF2FF',
     textColor: '#4338CA',
+    textSize: '16px',
   },
 ];
 

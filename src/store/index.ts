@@ -72,6 +72,7 @@ export const useStore = create<State>((set) => ({
     borderColor: '#FF4444',
     backgroundColor: '#FFFFFF',
     textColor: '#000000',
+    fontSize: '14px', // 默认字体大小为14px
   },
   promptParams: DEFAULT_PROMPT_PARAMS,
   languageParams: DEFAULT_LANGUAGE_PARAMS,

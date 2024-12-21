@@ -22,9 +22,18 @@ export const StyleEditor: React.FC = () => {
     borderColor: string;
     backgroundColor: string;
     textColor: string;
+    fontSize: string;
   }) => {
     setStyleSettings(preset);
     logger.ui.info('Style preset applied', { preset });
+  };
+
+  const handleFontSizeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setStyleSettings({
+      ...styleSettings,
+      fontSize: `${e.target.value}px`,
+    });
+    logger.ui.debug('Font size updated', { fontSize: `${e.target.value}px` });
   };
 
   return (
@@ -58,6 +67,19 @@ export const StyleEditor: React.FC = () => {
             onClick={() => setActiveColor(activeColor === 'text' ? null : 'text')}
             isActive={activeColor === 'text'}
           />
+
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">Font Size</label>
+            <input
+              type="range"
+              min="5"
+              max="25"
+              value={parseInt(styleSettings.fontSize, 10)}
+              onChange={handleFontSizeChange}
+              className="w-full"
+            />
+            <span className="block text-sm text-gray-700">{styleSettings.fontSize}</span>
+          </div>
         </div>
       </div>
     </div>

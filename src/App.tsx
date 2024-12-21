@@ -24,21 +24,18 @@ function App() {
         <Toolbar />
         
         <main className="container mx-auto p-4 md:p-8 flex-grow">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
-          <div className="lg:col-span-2 space-y-4">
-            <ImagePreview />
-            <ImageControls />
+          <div className="flex flex-col lg:flex-row gap-4 md:gap-8">
+            <div className="lg:w-2/3 space-y-4">
+              <ImagePreview />
+              <ImageControls />
+            </div>
+            <div className="lg:w-1/3 space-y-4 md:space-y-8">
+              <LabelEditor />
+              <StyleEditor />
+            </div>
           </div>
-          
-          <div className="space-y-4 md:space-y-8">
-            <LabelEditor />
-            <StyleEditor />
-          </div>
-        </div>
-      </main>
+        </main>
 
-      
-        
         {toasts.map((toast) => (
           <Toast
             key={toast.id}
