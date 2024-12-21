@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Upload, Play } from 'lucide-react';
 import { useStore } from '../store';
 import { LoadingSpinner } from './LoadingSpinner';
@@ -9,6 +9,7 @@ export const ImageControls: React.FC = () => {
   const { promptParams, setPromptParams } = useStore();
   const { handleImageUpload, isUploading } = useImageUpload();
   const { handleAnalysis, isAnalyzing } = useImageAnalysis();
+  const {languageParams, setLanguageParams} = useStore();
 
   return (
     <div className="mt-6 space-y-4">
@@ -74,6 +75,50 @@ export const ImageControls: React.FC = () => {
             onChange={(e) =>
               setPromptParams({ ...promptParams, param2: e.target.value })
             }
+            className="input"
+          />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+          <label htmlFor="sourceLanguage" className="label">
+            Source Language
+          </label>
+          <input
+            id="sourceLanguage"
+            type="text"
+            placeholder="Source Language"
+            value={languageParams.sourceLanguage}
+            onChange={(e) => setLanguageParams({ ...languageParams, sourceLanguage: e.target.value })}
+            className="input"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="targetLanguage" className="label">
+            Target Language
+          </label>
+          <input
+            id="targetLanguage"
+            type="text"
+            placeholder="Target Language"
+            value={languageParams.targetLanguage}
+            onChange={(e) => setLanguageParams({ ...languageParams, targetLanguage: e.target.value })}
+            className="input"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="phonetic" className="label">
+            Phinetic Name
+          </label>
+          <input
+            id="phonetic"
+            type="text"
+            placeholder="Phinetic Name"
+            value={languageParams.phonetic}
+            onChange={(e) => setLanguageParams({ ...languageParams, phonetic: e.target.value })}
             className="input"
           />
         </div>

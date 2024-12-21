@@ -32,7 +32,7 @@ export const LogEntry: React.FC<LogEntryProps> = ({ log }) => {
       
       {log.details && (
         <pre className="mt-1 text-xs bg-black/5 p-2 rounded overflow-x-auto">
-          {JSON.stringify(log.details, null, 2)}
+          {JSON.stringify(log.details as string, null, 2)}
         </pre>
       )}
       

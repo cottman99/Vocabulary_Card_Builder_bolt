@@ -12,6 +12,7 @@ export function useImageAnalysis() {
     image,
     imageSize,
     promptParams,
+    languageParams,
     setLabels,
     llmSettings,
     promptSettings,
@@ -39,13 +40,16 @@ export function useImageAnalysis() {
     }
 
     setIsAnalyzing(true);
-    logger.image.info('Starting image analysis', { imageSize, promptParams });
+    logger.image.info('Starting image analysis', { imageSize, promptParams, languageParams });
 
     try {
       // Replace prompt parameters
       const analysisPrompt = promptSettings.imageAnalysis
         .replace('{{param1}}', promptParams.param1)
-        .replace('{{param2}}', promptParams.param2);
+        .replace('{{param2}}', promptParams.param2)
+        .replace('{{sourceLanguage}}', languageParams.sourceLanguage)
+        .replace('{{targetLanguage}}', languageParams.targetLanguage)
+        .replace('{{phonetic}}', languageParams.phonetic);
 
       logger.llm.debug('Prepared analysis prompt', { analysisPrompt });
 
@@ -88,18 +92,28 @@ export function useImageAnalysis() {
             }
           });
 
+          // Replace prompt parameters
+          const generatePrompt = promptSettings.labelGeneration
+            .replace('{{param1}}', promptParams.param1)
+            .replace('{{param2}}', promptParams.param2)
+            .replace('{{sourceLanguage}}', languageParams.sourceLanguage)
+            .replace('{{targetLanguage}}', languageParams.targetLanguage)
+            .replace('{{phonetic}}', languageParams.phonetic);
+          logger.llm.debug('Prepared label generation prompt', { generatePrompt });
+
+
           // Generate label content
           const content = await generateLabelContent(
             result.label,
             llmSettings,
-            promptSettings.labelGeneration
+            generatePrompt
           );
 
           return {
             id: String(index + 1),
-            english: result.label,
+            sourceLanguage: result.label,
             phonetic: content.phonetic,
-            chinese: content.chinese,
+            targetLanguage: content.targetLanguage,
             position: {
               x: displayPosition.x,
               y: displayPosition.y
@@ -123,7 +137,7 @@ export function useImageAnalysis() {
       const labels = await Promise.all(labelPromises);
       logger.label.info('Labels generated', { 
         count: labels.length,
-        labels: labels.map(l => ({ id: l.id, english: l.english, position: l.position }))
+        labels: labels.map(l => ({ id: l.id, sourceLanguage: l.sourceLanguage, position: l.position }))
       });
       
       setLabels(labels);

@@ -123,11 +123,11 @@ export function useImageExport() {
           size: image.length,
         } : null,
         styleSettings,
-        labels: labels.map(({ id, english, phonetic, chinese, position }) => ({
+        labels: labels.map(({ id, sourceLanguage, phonetic, targetLanguage, position }) => ({
           id,
-          english,
+          sourceLanguage,
           phonetic,
-          chinese,
+          targetLanguage,
           position,
         })),
       };

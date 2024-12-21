@@ -1,8 +1,8 @@
 export interface Label {
   id: string;
-  english: string;
+  sourceLanguage: string;
   phonetic: string;
-  chinese: string;
+  targetLanguage: string;
   position: {
     x: number;
     y: number;

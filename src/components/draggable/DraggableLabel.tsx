@@ -38,7 +38,7 @@ export const DraggableLabel: React.FC<DraggableLabelProps> = ({
         position: label.position
       });
     }
-  }, [label.id, label.position, label.english, label.chinese, label.phonetic]);
+  }, [label.id, label.position, label.sourceLanguage, label.targetLanguage, label.phonetic]);
 
   const getBubblePosition = () => {
     return {
@@ -131,9 +131,9 @@ export const DraggableLabel: React.FC<DraggableLabelProps> = ({
           });
         }}
       >
-        <div className="font-bold text-sm mb-1">{label.english}</div>
+        <div className="font-bold text-sm mb-1">{label.sourceLanguage}</div>
         <div className="text-xs font-mono opacity-75">{label.phonetic}</div>
-        <div className="text-xs mt-1 font-medium">{label.chinese}</div>
+        <div className="text-xs mt-1 font-medium">{label.targetLanguage}</div>
       </div>
     </Draggable>
   );

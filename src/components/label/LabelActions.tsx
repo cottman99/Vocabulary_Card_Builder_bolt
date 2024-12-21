@@ -1,5 +1,5 @@
 import React from 'react';
-import { Plus, Minus, RefreshCw } from 'lucide-react';
+import { Plus, Trash2, RefreshCw } from 'lucide-react';
 import { Tooltip } from './Tooltip';
 
 interface LabelActionsProps {
@@ -7,13 +7,15 @@ interface LabelActionsProps {
   onRemove: () => void;
   onRegenerate: () => void;
   disabled?: boolean;
+  isRegenerating?: boolean;
 }
 
 export const LabelActions: React.FC<LabelActionsProps> = ({
   onAdd,
   onRemove,
   onRegenerate,
-  disabled
+  disabled,
+  isRegenerating = false
 }) => {
   return (
     <div className="flex gap-2">
@@ -24,18 +26,18 @@ export const LabelActions: React.FC<LabelActionsProps> = ({
           className="btn btn-danger p-2 hover:scale-102 active:scale-98"
           aria-label="Remove label"
         >
-          <Minus className="w-5 h-5" />
+          <Trash2 className="w-5 h-5" />
         </button>
       </Tooltip>
       
       <Tooltip content="Regenerate translations">
         <button
           onClick={onRegenerate}
-          disabled={disabled}
+          disabled={disabled || isRegenerating}
           className="btn btn-primary flex-1 p-2 hover:scale-102 active:scale-98"
           aria-label="Regenerate translations"
         >
-          <RefreshCw className="w-5 h-5" />
+          <RefreshCw className={`w-5 h-5 ${isRegenerating ? 'animate-spin' : ''}`} />
         </button>
       </Tooltip>
       

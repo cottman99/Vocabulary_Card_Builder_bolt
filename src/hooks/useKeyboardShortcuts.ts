@@ -23,9 +23,9 @@ export function useKeyboardShortcuts() {
         e.preventDefault();
         addLabel({
           id: String(Date.now()),
-          english: 'New Label',
+          sourceLanguage: 'New Label',
           phonetic: '',
-          chinese: '',
+          targetLanguage: '',
           position: { x: 100, y: 100 }
         });
         logger.ui.info('New label added via keyboard shortcut');

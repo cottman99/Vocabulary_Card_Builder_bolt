@@ -23,7 +23,7 @@ export interface ImageAnalysisResult {
 
 export interface LabelContent {
   phonetic: string;
-  chinese: string;
+  targetLanguage: string;
 }
 
 export interface LLMClient {

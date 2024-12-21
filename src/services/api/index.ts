@@ -40,7 +40,7 @@ export async function generateLabelContent(
     const client = createLLMClient(settings);
     const content = await client.generateLabelContent(text, prompt);
 
-    if (!content?.phonetic || !content?.chinese) {
+    if (!content?.phonetic || !content?.targetLanguage) {
       throw new APIError('Invalid label content format from LLM API');
     }
 

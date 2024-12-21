@@ -9,7 +9,7 @@ function validateLabelContent(content: any): boolean {
     content &&
     typeof content === 'object' &&
     typeof content.phonetic === 'string' &&
-    typeof content.chinese === 'string'
+    typeof content.targetLanguage === 'string'
   );
 }
 
@@ -25,6 +25,6 @@ export function parseLabelContentResponse(text: string): LabelContent {
 
   return {
     phonetic: parsed.phonetic.trim(),
-    chinese: parsed.chinese.trim(),
+    targetLanguage: parsed.targetLanguage.trim(),
   };
 }

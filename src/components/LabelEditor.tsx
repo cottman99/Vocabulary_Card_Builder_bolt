@@ -1,5 +1,4 @@
-import React, { useCallback } from 'react';
-import { Cursor } from 'lucide-react';
+import React, { useCallback, useState } from 'react';
 import { useStore } from '../store';
 import { generateLabelContent } from '../services/api/index';
 import { LabelField } from './label/LabelField';
@@ -11,6 +10,8 @@ import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
 export const LabelEditor: React.FC = () => {
   useKeyboardShortcuts();
 
+  const [isRegenerating, setIsRegenerating] = useState(false);
+
   const { 
     labels, 
     selectedLabelId, 
@@ -18,7 +19,9 @@ export const LabelEditor: React.FC = () => {
     addLabel,
     removeLabel, 
     llmSettings, 
-    promptSettings 
+    promptSettings,
+    promptParams,
+    languageParams
   } = useStore();
 
   const selectedLabel = labels.find(label => label.id === selectedLabelId);
@@ -27,20 +30,30 @@ export const LabelEditor: React.FC = () => {
     if (!selectedLabel) return;
 
     try {
+      setIsRegenerating(true);
       logger.label.info('Regenerating label content', {
         labelId: selectedLabel.id,
-        english: selectedLabel.english
+        sourceLanguage: selectedLabel.sourceLanguage
       });
 
+      // Replace prompt parameters
+      const generatePrompt = promptSettings.labelGeneration
+      .replace('{{param1}}', promptParams.param1)
+      .replace('{{param2}}', promptParams.param2)
+      .replace('{{sourceLanguage}}', languageParams.sourceLanguage)
+      .replace('{{targetLanguage}}', languageParams.targetLanguage)
+      .replace('{{phonetic}}', languageParams.phonetic);
+      logger.llm.debug('Prepared label generation prompt', { generatePrompt });
+
       const content = await generateLabelContent(
-        selectedLabel.english,
+        selectedLabel.sourceLanguage,
         llmSettings,
-        promptSettings.labelGeneration
+        generatePrompt
       );
       
       updateLabel(selectedLabel.id, {
         phonetic: content.phonetic,
-        chinese: content.chinese,
+        targetLanguage: content.targetLanguage,
       });
 
       logger.label.info('Label content regenerated', {
@@ -52,6 +65,8 @@ export const LabelEditor: React.FC = () => {
         labelId: selectedLabel.id,
         error: error instanceof Error ? error.message : String(error)
       });
+    } finally {
+      setIsRegenerating(false);
     }
   };
 
@@ -69,9 +84,9 @@ export const LabelEditor: React.FC = () => {
   const handleAddLabel = () => {
     const newLabel = {
       id: String(Date.now()),
-      english: 'New Label',
+      sourceLanguage: 'New Label',
       phonetic: '',
-      chinese: '',
+      targetLanguage: '',
       position: { x: 100, y: 100 }
     };
     addLabel(newLabel);
@@ -105,10 +120,10 @@ export const LabelEditor: React.FC = () => {
       </div>
       <div className="space-y-6">
         <LabelField
-          label="English"
-          value={selectedLabel.english}
-          onChange={(value) => handleFieldUpdate('english', value)}
-          placeholder="Enter English text"
+          label="sourceLanguage"
+          value={selectedLabel.sourceLanguage}
+          onChange={(value) => handleFieldUpdate('sourceLanguage', value)}
+          placeholder="Enter sourceLanguage text"
         />
         
         <LabelField
@@ -119,10 +134,10 @@ export const LabelEditor: React.FC = () => {
         />
         
         <LabelField
-          label="Chinese"
-          value={selectedLabel.chinese}
-          onChange={(value) => handleFieldUpdate('chinese', value)}
-          placeholder="Chinese translation"
+          label="targetLanguage"
+          value={selectedLabel.targetLanguage}
+          onChange={(value) => handleFieldUpdate('targetLanguage', value)}
+          placeholder="targetLanguage translation"
         />
         
         <div className="pt-4">
@@ -130,6 +145,7 @@ export const LabelEditor: React.FC = () => {
             onAdd={handleAddLabel}
             onRemove={handleRemoveLabel}
             onRegenerate={handleRegenerateLabel}
+            isRegenerating={isRegenerating}
           />
         </div>
         <div className="text-xs text-gray-400 text-center bg-gray-50/50

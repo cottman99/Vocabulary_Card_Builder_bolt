@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { Label, LLMSettings, PromptSettings, StyleSettings } from '../types';
-import { DEFAULT_IMAGE_ANALYSIS_PROMPT, DEFAULT_LABEL_GENERATION_PROMPT, DEFAULT_PARAMS } from '../utils/defaults';
+import { DEFAULT_IMAGE_ANALYSIS_PROMPT, DEFAULT_LABEL_GENERATION_PROMPT, DEFAULT_PROMPT_PARAMS, DEFAULT_LANGUAGE_PARAMS } from '../utils/defaults';
 import { logger } from '../utils/logger/Logger';
 
 interface ImageSize {
@@ -32,6 +32,11 @@ interface State {
     param1: string;
     param2: string;
   };
+  languageParams: {
+    sourceLanguage: string;
+    targetLanguage: string;
+    phonetic: string;
+  };
   isAnalyzing: boolean;
   setImage: (image: string | null) => void;
   setImageSize: (size: ImageSize | null) => void;
@@ -44,6 +49,7 @@ interface State {
   setPromptSettings: (settings: PromptSettings) => void;
   setStyleSettings: (settings: StyleSettings) => void;
   setPromptParams: (params: { param1: string; param2: string }) => void;
+  setLanguageParams: (params: { sourceLanguage: string; targetLanguage: string; phonetic: string }) => void;
   setIsAnalyzing: (isAnalyzing: boolean) => void;
 }
 
@@ -67,7 +73,8 @@ export const useStore = create<State>((set) => ({
     backgroundColor: '#FFFFFF',
     textColor: '#000000',
   },
-  promptParams: DEFAULT_PARAMS,
+  promptParams: DEFAULT_PROMPT_PARAMS,
+  languageParams: DEFAULT_LANGUAGE_PARAMS,
   isAnalyzing: false,
   setImage: (image) => set({ image }),
   setImageSize: (size) => set({ imageSize: size }),
@@ -91,5 +98,6 @@ export const useStore = create<State>((set) => ({
   setPromptSettings: (settings) => set({ promptSettings: settings }),
   setStyleSettings: (settings) => set({ styleSettings: settings }),
   setPromptParams: (params) => set({ promptParams: params }),
+  setLanguageParams: (params) => set({ languageParams: params }),
   setIsAnalyzing: (isAnalyzing) => set({ isAnalyzing }),
 }));
